@@ -5,6 +5,7 @@ import {
   Param,
   ParseBoolPipe,
   ParseIntPipe,
+  Patch,
   Post,
   Query,
   UsePipes,
@@ -39,6 +40,37 @@ export class PropertyController {
   @Post('body')
   bodyValidation(
     @Body(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
+    body: CreatePropertyDto,
+  ) {
+    return body;
+  }
+
+  @Post('group')
+  @UsePipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      groups: ['create'],
+      always: true
+    }),
+  )
+  validationGroupsCreate(
+    @Body()
+    body: CreatePropertyDto,
+  ) {
+    return body;
+  }
+
+  @Patch('group')
+  @UsePipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      groups: ['update'],
+    }),
+  )
+  validationGroupsUpdate(
+    @Body()
     body: CreatePropertyDto,
   ) {
     return body;
