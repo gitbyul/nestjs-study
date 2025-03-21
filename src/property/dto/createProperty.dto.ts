@@ -6,7 +6,7 @@ export class CreatePropertyDto {
   name: string;
 
   @IsString()
-  @Length(2, 10, { groups: ['create'] })
+  @Length(2, 10, { groups: ['create'] }) // global 혹은 module Level validation 에서는 첫번째만 적용됨
   @Length(1, 15, { groups: ['update'] })
   description: string;
 
