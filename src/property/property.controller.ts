@@ -14,6 +14,12 @@ import {
 import { CreatePropertyDto } from './dto/createProperty.dto';
 import { IdParamDto } from './dto/idParam.dto';
 import { ParseIdPipe } from './pipes/parseId.pipe';
+import { ZodValidationPipe } from './pipes/zodValidation.pipe';
+import {
+  CreatePropertySchema,
+  CreatePropertyZodDto,
+} from './dto/createPropertyZod.dto';
+import { ZodSafeValidationPipe } from './pipes/zodSafeValidation.pipe';
 
 @Controller('/property')
 export class PropertyController {
@@ -79,5 +85,23 @@ export class PropertyController {
   parsePipe(@Param('id', ParseIdPipe) id) {
     console.log('parsePipe : ', id);
     return id;
+  }
+
+  @Post('zod')
+  @UsePipes(new ZodValidationPipe(CreatePropertySchema))
+  customValidationWithZod(
+    @Body()
+    body: CreatePropertyZodDto,
+  ) {
+    return body;
+  }
+
+  @Post('safezod')
+  @UsePipes(new ZodSafeValidationPipe(CreatePropertySchema))
+  customSafeValidationWithZod(
+    @Body()
+    body: CreatePropertyZodDto,
+  ) {
+    return body;
   }
 }
