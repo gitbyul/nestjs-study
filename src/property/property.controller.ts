@@ -12,6 +12,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { CreatePropertyDto } from './dto/createProperty.dto';
+import { IdParamDto } from './dto/idParam.dto';
 
 @Controller('/property')
 export class PropertyController {
@@ -59,5 +60,17 @@ export class PropertyController {
     body: CreatePropertyDto,
   ) {
     return body;
+  }
+
+  @Get('param/:id')
+  validationParam(@Param() param: IdParamDto) {
+    console.log('validationParam : ', param);
+    return param;
+  }
+
+  @Get('param2/:id')
+  validationParam2(@Param() { id }: IdParamDto) {
+    console.log('validationParam : ', id);
+    return id;
   }
 }
