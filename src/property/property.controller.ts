@@ -1,4 +1,4 @@
-import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Param, ParseBoolPipe, ParseIntPipe, Query } from '@nestjs/common';
 
 @Controller('/property')
 export class PropertyController {
@@ -8,8 +8,9 @@ export class PropertyController {
   }
 
   @Get(':id')
-  findByOne(@Param('id', ParseIntPipe) id) {
+  findByOne(@Param('id', ParseIntPipe) id, @Query('sort', ParseBoolPipe) sort) {
     console.log({ id, type: typeof id });
+    console.log({ id: sort, type: typeof sort });
 
     return id;
   }
