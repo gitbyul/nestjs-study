@@ -13,6 +13,7 @@ import {
 } from '@nestjs/common';
 import { CreatePropertyDto } from './dto/createProperty.dto';
 import { IdParamDto } from './dto/idParam.dto';
+import { ParseIdPipe } from './pipes/parseId.pipe';
 
 @Controller('/property')
 export class PropertyController {
@@ -71,6 +72,12 @@ export class PropertyController {
   @Get('param2/:id')
   validationParam2(@Param() { id }: IdParamDto) {
     console.log('validationParam : ', id);
+    return id;
+  }
+
+  @Get('parse/:id')
+  parsePipe(@Param('id', ParseIdPipe) id) {
+    console.log('parsePipe : ', id);
     return id;
   }
 }
