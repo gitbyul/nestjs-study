@@ -1,4 +1,6 @@
-import { Controller, Headers, Post } from '@nestjs/common';
+import { Controller, Headers, Post, ValidationPipe } from '@nestjs/common';
+import { HeadersDto } from './dto/headers.dto';
+import { RequestHeader } from './pipes/request-header.pipe';
 
 @Controller('/header')
 export class HeadersController {
@@ -22,5 +24,15 @@ export class HeadersController {
       host,
       connection,
     };
+  }
+
+  @Post('/false')
+  validationHeader(
+    @RequestHeader(
+      new ValidationPipe({ whitelist: true, validateCustomDecorators: true }),
+    )
+    header: HeadersDto,
+  ) {
+    return header;
   }
 }
