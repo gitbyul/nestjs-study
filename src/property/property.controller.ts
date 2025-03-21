@@ -6,4 +6,11 @@ export class PropertyController {
   findAll(): string {
     return 'All Properties';
   }
+
+  @Get(':id')
+  findByOne(@Param('id', ParseIntPipe) id) {
+    console.log({ id, type: typeof id });
+
+    return id;
+  }
 }
