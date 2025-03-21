@@ -46,14 +46,6 @@ export class PropertyController {
   }
 
   @Post('group')
-  @UsePipes(
-    new ValidationPipe({
-      whitelist: true,
-      forbidNonWhitelisted: true,
-      groups: ['create'],
-      always: true
-    }),
-  )
   validationGroupsCreate(
     @Body()
     body: CreatePropertyDto,
@@ -62,13 +54,6 @@ export class PropertyController {
   }
 
   @Patch('group')
-  @UsePipes(
-    new ValidationPipe({
-      whitelist: true,
-      forbidNonWhitelisted: true,
-      groups: ['update'],
-    }),
-  )
   validationGroupsUpdate(
     @Body()
     body: CreatePropertyDto,
