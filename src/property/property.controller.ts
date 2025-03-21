@@ -1,4 +1,16 @@
-import { Controller, Get, Param, ParseBoolPipe, ParseIntPipe, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseBoolPipe,
+  ParseIntPipe,
+  Post,
+  Query,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
+import { CreatePropertyDto } from './dto/createProperty.dto';
 
 @Controller('/property')
 export class PropertyController {
@@ -13,5 +25,22 @@ export class PropertyController {
     console.log({ id: sort, type: typeof sort });
 
     return id;
+  }
+
+  @Post('decorator')
+  @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
+  decoratorValidation(
+    @Body()
+    body: CreatePropertyDto,
+  ) {
+    return body;
+  }
+
+  @Post('body')
+  bodyValidation(
+    @Body(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
+    body: CreatePropertyDto,
+  ) {
+    return body;
   }
 }
