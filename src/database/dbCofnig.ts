@@ -1,9 +1,9 @@
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
 export const pgConfig: PostgresConnectionOptions = {
-  url: '',
+  url: 'postgresql://{url}/{schema}',
   type: 'postgres',
   port: 3306,
-  entities: [],
+  entities: [__dirname + '/**/*.entity{.ts,.js}'],
   synchronize: true,
 };
