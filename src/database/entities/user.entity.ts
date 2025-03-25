@@ -1,4 +1,13 @@
-import { Column, CreateDateColumn, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { PropertyFeature } from './propertyFeature.entity';
 import { Property } from './property.entity';
 
@@ -22,6 +31,10 @@ export class User {
   @CreateDateColumn()
   createdAt: Date;
 
-  @OneToMany(() => Property, (property) =>property.user)
-  properties:Property[]
+  @OneToMany(() => Property, (property) => property.user)
+  properties: Property[];
+
+  @ManyToMany(() => Property, (property) => property.likedBy)
+  @JoinTable({ name: 'user_liked_properties' })
+  likedProperties: Property[];
 }
