@@ -3,12 +3,16 @@ import { APP_PIPE } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseController } from './database.controller';
 import { DatabaseService } from './database.service';
-import { pgConfig } from './dbCofnig';
 import { Property } from './entities/property.entity';
+import dbConfig from 'src/config/db.config';
+import dbProductionConfig from 'src/config/db.config.producition';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(pgConfig),
+    TypeOrmModule.forRootAsync({
+      useFactory:
+        process.env.NODE_ENV === 'production' ? dbProductionConfig : dbConfig,
+    }),
     TypeOrmModule.forFeature([Property]),
   ],
   controllers: [DatabaseController],
