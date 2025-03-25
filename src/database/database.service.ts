@@ -4,6 +4,8 @@ import { Repository } from 'typeorm';
 import { CreatePropertyDto } from './dto/createProperty.dto';
 import { UpdatePropertyDto } from './dto/updateProperty.dto';
 import { Property } from './entities/property.entity';
+import { PaginationDto } from './dto/pagination.dto';
+import { DEFAULT_CURRENT_PAGE, DEFAULT_PAGE_SIZE } from './utils/constants';
 
 @Injectable()
 export class DatabaseService {
@@ -12,8 +14,32 @@ export class DatabaseService {
     private readonly propertyRepo: Repository<Property>,
   ) {}
 
-  async findAll() {
-    return await this.propertyRepo.find();
+  async findAll(paignationDto: PaginationDto) {
+    return await this.propertyRepo.find({
+      skip: paignationDto.offset,
+      take: paignationDto.limit ?? DEFAULT_PAGE_SIZE,
+    });
+  }
+
+  async paginationFindAll(paignationDto: PaginationDto) {
+    const page = paignationDto.offset ?? DEFAULT_CURRENT_PAGE;
+    const pageSize = paignationDto.limit ?? DEFAULT_PAGE_SIZE;
+
+    const [data, total] = await this.propertyRepo
+      .createQueryBuilder('property')
+      .skip((page - 1) * pageSize)
+      .take(pageSize)
+      .getManyAndCount();
+
+    const totalPages = Math.ceil(total / pageSize);
+
+    return {
+      data,
+      total,
+      totalPages,
+      currentPage: page,
+      pageSize: pageSize,
+    };
   }
 
   async findOne(id: number) {
@@ -35,7 +61,7 @@ export class DatabaseService {
   async update(id: number, dto: UpdatePropertyDto) {
     return await this.propertyRepo.update({ id }, dto);
   }
-  
+
   async delete(id: number) {
     return await this.propertyRepo.delete({ id });
   }

@@ -7,10 +7,12 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { DatabaseService } from './database.service';
 import { CreatePropertyDto } from './dto/createProperty.dto';
 import { UpdatePropertyDto } from './dto/updateProperty.dto';
+import { PaginationDto } from './dto/pagination.dto';
 
 
 @Controller('/db')
@@ -18,8 +20,13 @@ export class DatabaseController {
   constructor(private readonly databaseService: DatabaseService) {}
 
   @Get()
-  findAll() {
-    return this.databaseService.findAll();
+  findAll(@Query() paignationDto : PaginationDto) {
+    return this.databaseService.findAll(paignationDto);
+  }
+
+  @Get('pn')
+  paginationFindAll(@Query() paignationDto : PaginationDto) {
+    return this.databaseService.paginationFindAll(paignationDto);
   }
 
   @Get(':id')
