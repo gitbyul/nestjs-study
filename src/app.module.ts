@@ -6,6 +6,7 @@ import { DatabaseModule } from './database/database.module';
 import { HeadersModule } from './header/header.module';
 import { PropertyModule } from './property/property.module';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 import dbConfig from './config/db.config';
 
 @Module({
@@ -19,6 +20,7 @@ import dbConfig from './config/db.config';
     HeadersModule,
     DatabaseModule,
     UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
