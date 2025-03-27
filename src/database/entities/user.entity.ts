@@ -30,6 +30,9 @@ export class User {
   @Column()
   avatarUrl: string;
 
+  @Column({ nullable: true })
+  hashedRefreshToken: string;
+
   @CreateDateColumn()
   createdAt: Date;
 

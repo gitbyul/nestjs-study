@@ -10,6 +10,9 @@ export class UserService {
     @InjectRepository(User) private readonly userRepo: Repository<User>,
   ) {}
 
+  // https://youtu.be/dUTKVYkDtx0?list=PLhnVDNT5zYN_PfPXedWpMy_UTeYNExbfR&t=476
+  async updateHashedRefreshToken(userId:number, hashedRefreshToken:string){}
+
   async create(createUserDto: CreateUserDto) {
     const user = await this.userRepo.create(createUserDto);
 
